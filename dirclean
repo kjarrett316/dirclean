@@ -1,0 +1,50 @@
+#!/bin/bash
+#dirclean
+#CS406 Summer 2015
+#Kaitlyn Jarrett
+
+function printusage() {
+	echo "Usage: dirclean [--test] ROOT_DIRECTORY PATTERN ..."
+	exit 1
+}
+
+if [[ ! $# -ge 2 ]]; then
+	printusage
+fi
+
+testflag=false;
+
+if [[ "$1" = "--test" ]]; then
+	if [[ ! $# -ge 3 ]]; then
+		printusage
+	fi
+	testflag=true
+	shift 1
+fi
+
+
+if [[ ! -d "$1" ]]; then
+	echo "dirclean: $1: No such directory"
+	exit 1
+fi
+
+rootdir=$(cd "$1"; pwd) 
+shift 1
+
+cd "$rootdir"
+
+while [[ $# -ge 1 ]]; do
+	
+	for f in .* *; do #I am really glad that you mentioned this in class
+		
+		if [[ "$f" = $1 && -f "$f" ]]; then
+			echo "Deleting file: $rootdir/$f"
+			if [[ "$testflag" = false ]]; then 
+				rm -f "$f" &> /dev/null
+			fi
+		fi
+	done
+	shift 1
+done
+
+exit 0
