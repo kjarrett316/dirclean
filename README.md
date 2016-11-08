@@ -1,4 +1,4 @@
 # dirclean
 ### Usage
 
-'dirclean [--test] ROOT_DIRECTORY PATTERN ...'
+`dirclean [--test] ROOT_DIRECTORY PATTERN ...`
